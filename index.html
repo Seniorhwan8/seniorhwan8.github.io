@@ -1,0 +1,501 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Sean – Projects & Experiments</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="description" content="Sean's personal site – mechanical engineering, GPT agents, and factory TPS experiments." />
+
+  <style>
+    :root {
+      --bg: #0b0c10;
+      --bg-alt: #11121a;
+      --fg: #f5f5f5;
+      --muted: #a7abb6;
+      --accent: #4fd1c5;
+      --accent-soft: rgba(79, 209, 197, 0.15);
+      --border-subtle: #262739;
+      --font-main: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      --max-width: 760px;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      padding: 0;
+      font-family: var(--font-main);
+      background: radial-gradient(circle at top, #151827 0, #05060a 50%, #020308 100%);
+      color: var(--fg);
+      line-height: 1.6;
+    }
+
+    a {
+      color: var(--accent);
+      text-decoration: none;
+    }
+
+    a:hover {
+      text-decoration: underline;
+    }
+
+    .page {
+      max-width: var(--max-width);
+      margin: 0 auto;
+      padding: 24px 16px 40px;
+    }
+
+    header {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      padding: 16px 0 24px;
+      border-bottom: 1px solid var(--border-subtle);
+      position: sticky;
+      top: 0;
+      backdrop-filter: blur(14px);
+      background: linear-gradient(to bottom, rgba(5,6,10,0.92), rgba(5,6,10,0.80) 60%, transparent);
+      z-index: 10;
+    }
+
+    .top-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      gap: 8px;
+    }
+
+    .name {
+      font-size: 1.6rem;
+      font-weight: 650;
+      letter-spacing: 0.03em;
+    }
+
+    .tagline {
+      font-size: 0.95rem;
+      color: var(--muted);
+    }
+
+    nav {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      font-size: 0.85rem;
+    }
+
+    nav a {
+      padding: 4px 10px;
+      border-radius: 999px;
+      border: 1px solid transparent;
+      background: transparent;
+      color: var(--muted);
+      text-decoration: none;
+    }
+
+    nav a:hover {
+      border-color: var(--accent-soft);
+      background: var(--accent-soft);
+      color: var(--fg);
+    }
+
+    main {
+      padding-top: 16px;
+    }
+
+    section {
+      padding: 24px 0;
+      border-bottom: 1px solid var(--border-subtle);
+    }
+
+    h2 {
+      font-size: 1.2rem;
+      margin: 0 0 8px;
+    }
+
+    .section-kicker {
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+      font-size: 0.7rem;
+      color: var(--accent);
+      margin-bottom: 4px;
+    }
+
+    p {
+      margin: 0 0 12px;
+      color: #d4d7e3;
+      font-size: 0.95rem;
+    }
+
+    .projects-grid {
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+      margin-top: 12px;
+    }
+
+    .card {
+      padding: 14px 14px 12px;
+      border-radius: 12px;
+      background: linear-gradient(135deg, #101220, #0b0d18);
+      border: 1px solid var(--border-subtle);
+    }
+
+    .card-title {
+      font-weight: 600;
+      font-size: 0.98rem;
+      margin-bottom: 4px;
+    }
+
+    .card-tagline {
+      font-size: 0.85rem;
+      color: var(--muted);
+      margin-bottom: 8px;
+    }
+
+    .pill-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+      margin-top: 4px;
+    }
+
+    .pill {
+      font-size: 0.75rem;
+      padding: 2px 8px;
+      border-radius: 999px;
+      background: rgba(255,255,255,0.04);
+      border: 1px solid rgba(255,255,255,0.04);
+      color: var(--muted);
+    }
+
+    .tps-highlight {
+      padding: 12px;
+      border-radius: 10px;
+      background: radial-gradient(circle at top left, var(--accent-soft), transparent 70%);
+      border: 1px solid var(--accent-soft);
+      font-size: 0.9rem;
+      color: #e3f6f4;
+      margin-top: 10px;
+    }
+
+    .ask-box {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      margin-top: 12px;
+    }
+
+    .ask-row {
+      display: flex;
+      gap: 8px;
+    }
+
+    .ask-input {
+      flex: 1;
+      padding: 8px 10px;
+      border-radius: 999px;
+      border: 1px solid var(--border-subtle);
+      background: #090a11;
+      color: var(--fg);
+      font-size: 0.9rem;
+      outline: none;
+    }
+
+    .ask-input:focus {
+      border-color: var(--accent);
+    }
+
+    .ask-button {
+      padding: 8px 14px;
+      border-radius: 999px;
+      border: 1px solid var(--accent);
+      background: var(--accent-soft);
+      color: var(--fg);
+      font-size: 0.9rem;
+      cursor: pointer;
+      white-space: nowrap;
+    }
+
+    .ask-button:hover {
+      background: rgba(79, 209, 197, 0.25);
+    }
+
+    .ask-response {
+      min-height: 32px;
+      font-size: 0.9rem;
+      color: #e6f9ff;
+    }
+
+    .ask-label {
+      font-size: 0.8rem;
+      color: var(--muted);
+    }
+
+    .contact-list {
+      list-style: none;
+      padding: 0;
+      margin: 8px 0 0;
+      font-size: 0.9rem;
+    }
+
+    .contact-list li {
+      margin-bottom: 4px;
+    }
+
+    footer {
+      padding-top: 16px;
+      font-size: 0.8rem;
+      color: var(--muted);
+    }
+
+    @media (min-width: 640px) {
+      .page {
+        padding: 32px 16px 48px;
+      }
+      header {
+        padding-top: 12px;
+        padding-bottom: 20px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="page">
+    <header>
+      <div class="top-row">
+        <div>
+          <div class="name">Sean <!-- Replace with your full name if you want --></div>
+          <div class="tagline">
+            Mechanical engineering student · AI toolsmith · Automating boring work.
+          </div>
+        </div>
+      </div>
+      <nav>
+        <a href="#interests">Interests</a>
+        <a href="#projects">Projects</a>
+        <a href="#tps">TPS @ SBE</a>
+        <a href="#ask">Ask about Sean</a>
+        <a href="#contact">Contact</a>
+      </nav>
+    </header>
+
+    <main>
+      <!-- Interests -->
+      <section id="interests">
+        <div class="section-kicker">Overview</div>
+        <h2>Interests</h2>
+        <p>
+          Sean, former child and current curious mind, doesn’t like doing boring repetitive tasks –
+          especially when a machine or a script can do them instead. I like the intersection of
+          mechanical engineering, AI, and real factories: taking messy real-world processes and
+          making them cleaner, faster, and more reliable.
+        </p>
+        <p>
+          Recently I’ve been focusing on: (1) designing simple but effective hardware like a
+          river-cleaning boat, (2) building GPT agents that analyze messy manufacturing data,
+          and (3) using chatbots as a front-end to explain complex technical work in plain language.
+        </p>
+      </section>
+
+      <!-- Projects -->
+      <section id="projects">
+        <div class="section-kicker">Builds & Experiments</div>
+        <h2>Selected Projects</h2>
+        <p>
+          A sample of things I’ve built or experimented with. None of them are “perfect”, but all of
+          them taught me something real.
+        </p>
+
+        <div class="projects-grid">
+          <!-- River-cleaning boat -->
+          <article class="card">
+            <div class="card-title">Kapal Pembersih Sungai</div>
+            <div class="card-tagline">Inventor project to collect trash from rivers with minimal operator effort.</div>
+            <p>
+              A CAD and engineering design project built in Autodesk Inventor. The idea: a low-cost
+              river-cleaning boat that can collect floating waste while being easy to manufacture and
+              maintain locally. I focused on mechanical design, simplicity of assembly, and how to
+              adapt the design to existing workshop capabilities.
+            </p>
+            <p>
+              I’m especially interested in how this kind of project can be iterated into something
+              manufacturable in small runs, not just a “school project”.
+            </p>
+            <div class="pill-row">
+              <span class="pill">Inventor</span>
+              <span class="pill">Mechanical design</span>
+              <span class="pill">Manufacturability</span>
+            </div>
+          </article>
+
+          <!-- GPT Agents -->
+          <article class="card">
+            <div class="card-title">GPT Agents for Manufacturing</div>
+            <div class="card-tagline">Turning messy Excel NG data into focused, human-readable decisions.</div>
+            <p>
+              I’ve been building GPT-based agents that can read production and NG Excel files,
+              detect patterns (like top defects, rework hotspots, and unstable processes), and then
+              explain what’s going on in clear language a line leader or engineer can use.
+            </p>
+            <p>
+              These agents don’t just summarize; they help choose a tight focus, form basic PFMEA-like
+              thinking, and draft small “do this next” experiments. The long-term goal is to make
+              TPS-style improvement loops less manual and more data-driven.
+            </p>
+            <div class="pill-row">
+              <span class="pill">GPT agents</span>
+              <span class="pill">Excel analysis</span>
+              <span class="pill">PFMEA-lite</span>
+              <span class="pill">TPS thinking</span>
+            </div>
+          </article>
+
+          <!-- Chatbots -->
+          <article class="card">
+            <div class="card-title">Chatbots as Explainers</div>
+            <div class="card-tagline">Turning boring documentation into interactive conversations.</div>
+            <p>
+              I experiment with chatbots that sit on top of technical content: internship reports,
+              NG analysis, or project notes. Instead of reading a 40-page document, people can ask
+              questions like “Explain this to a new intern” or “What changed between month 1 and 5?”.
+            </p>
+            <p>
+              My favorite style is informal: the bot explains things the way I’d explain them to a
+              friend, but backed by real data and calculations.
+            </p>
+            <div class="pill-row">
+              <span class="pill">Conversational UI</span>
+              <span class="pill">Technical explanation</span>
+              <span class="pill">Documentation</span>
+            </div>
+          </article>
+        </div>
+      </section>
+
+      <!-- TPS / SBE -->
+      <section id="tps">
+        <div class="section-kicker">Real-world Work</div>
+        <h2>TPS @ Sinar Baja Electric</h2>
+        <p>
+          At CV Sinar Baja Electric, I’ve been working on applying Toyota Production System (TPS)
+          thinking to real manufacturing data: stamping, plating, and painting processes for speaker
+          components. The work combines process observation, Excel data cleaning, and NG analysis.
+        </p>
+        <p>
+          A lot of the job is unglamorous: fixing messy routing data, tracking NG across months,
+          verifying cycle times, and helping prioritize which defect to tackle first. That’s exactly
+          why I like it – it’s where small improvements compound into real throughput and quality
+          gains.
+        </p>
+        <div class="tps-highlight">
+          Focus areas:
+          <ul>
+            <li>Using 5-month NG datasets to build Pareto views and spot unstable processes.</li>
+            <li>Drafting PFMEA-lite tables with severity/occurrence/detection and simple RPN.</li>
+            <li>Translating data into “next actions” for line leaders and mechanics.</li>
+          </ul>
+        </div>
+      </section>
+
+      <!-- Ask about Sean -->
+      <section id="ask">
+        <div class="section-kicker">Playground</div>
+        <h2>Ask about Sean</h2>
+        <p>
+          This is a tiny, offline demo of the kind of chatbot front-end I like to build. In a real
+          deployment this would call an actual LLM with my profile and projects. Here, it just
+          answers in my typical style.
+        </p>
+
+        <div class="ask-box">
+          <div class="ask-row">
+            <input
+              id="ask-input"
+              class="ask-input"
+              type="text"
+              placeholder="Ask anything, e.g. 'What does Sean actually do?'"
+            />
+            <button id="ask-button" class="ask-button">Ask</button>
+          </div>
+          <div class="ask-label">Demo only – responses are pre-baked, not actual AI.</div>
+          <div id="ask-response" class="ask-response"></div>
+        </div>
+      </section>
+
+      <!-- Contact -->
+      <section id="contact">
+        <div class="section-kicker">Contact</div>
+        <h2>Get in touch</h2>
+        <p>
+          If you want to talk about manufacturing data, GPT agents, river-cleaning boats, or
+          anything adjacent, feel free to reach out.
+        </p>
+        <ul class="contact-list">
+          <li>Email: <a href="mailto:your.email@example.com">your.email@example.com</a></li>
+          <li>LinkedIn: <a href="https://www.linkedin.com/in/your-handle" target="_blank">linkedin.com/in/your-handle</a></li>
+          <li>GitHub: <a href="https://github.com/your-github" target="_blank">github.com/your-github</a></li>
+        </ul>
+      </section>
+
+      <footer>
+        © <span id="year"></span> Sean. Built by hand with HTML, CSS, and a bit of JavaScript.
+      </footer>
+    </main>
+  </div>
+
+  <script>
+    // Current year
+    document.getElementById("year").textContent = new Date().getFullYear();
+
+    // Smooth scroll for internal links (optional)
+    document.querySelectorAll('a[href^="#"]').forEach(function(anchor) {
+      anchor.addEventListener("click", function (e) {
+        const targetId = this.getAttribute("href");
+        if (targetId.length > 1) {
+          e.preventDefault();
+          const el = document.querySelector(targetId);
+          if (el) {
+            window.scrollTo({
+              top: el.offsetTop - 80,
+              behavior: "smooth"
+            });
+          }
+        }
+      });
+    });
+
+    // Tiny "Ask about Sean" demo
+    const responses = [
+      "Sean: former child, current curious engineer. Likes automating boring work more than doing it.",
+      "Short version: mechanical engineering student who accidentally fell into GPT agents and manufacturing data.",
+      "Sean is the kind of person who opens Excel \"just to check something\" and then leaves 20 pivot tables behind.",
+      "Mostly builds things to answer the question: can this be less manual, less painful, and a bit more fun?",
+      "Official bio: mechanical engineering, TPS, GPT agents. Unofficial bio: refuses to accept that factories must stay boring."
+    ];
+
+    function answerQuestion() {
+      const input = document.getElementById("ask-input");
+      const box = document.getElementById("ask-response");
+      const q = (input.value || "").trim();
+
+      if (!q) {
+        box.textContent = "Ask me something first 😄";
+        return;
+      }
+
+      const idx = Math.floor(Math.random() * responses.length);
+      box.textContent = responses[idx];
+      input.value = "";
+    }
+
+    document.getElementById("ask-button").addEventListener("click", answerQuestion);
+    document.getElementById("ask-input").addEventListener("keydown", function (e) {
+      if (e.key === "Enter") {
+        answerQuestion();
+      }
+    });
+  </script>
+</body>
+</html>
